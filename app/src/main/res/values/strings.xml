@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Fitness Training</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="btn_workouts">Workouts</string>
+    <string name="btn_stats">My Stats</string>
+    <string name="btn_log">My Log</string>
+
+    <string name="img_running_man">Man Jogging</string>
+
+    <string name="text_workouttitle">Select A Workout</string>
+    <string name="text_myworkouts">My Workouts</string>
+</resources>
