@@ -15,7 +15,11 @@ import android.support.annotation.NonNull;
                         parentColumns = "exercise_name",
                         childColumns = "exerciseName")
         },
-        indices = {@Index(value = {"workoutName", "exerciseName"})})
+        indices = {
+                @Index(value = {"workoutName"}),
+                @Index(value = {"exerciseName"})
+        }
+        )
 public class WorkoutExerciseJoin {
     @NonNull
     private final String workoutName;

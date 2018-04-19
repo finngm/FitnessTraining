@@ -6,11 +6,13 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import fgmfitnessapp.fitnesstraining.R;
 import fgmfitnessapp.fitnesstraining.model.Exercise;
 import fgmfitnessapp.fitnesstraining.model.ExerciseDao;
 import fgmfitnessapp.fitnesstraining.model.Workout;
@@ -47,49 +49,48 @@ public abstract class FitnessDatabase extends RoomDatabase {
 
         if (DBINSTANCE == null) {
             DBINSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    FitnessDatabase.class, "ft_database").addCallback(dbCallback).build();
+                    FitnessDatabase.class, "fit_database").addCallback(dbCallback).build();
         }
 
         return DBINSTANCE;
     }
 
     private static void createDefaultWorkouts() {
-//        FitnessDatabase db = (FitnessDatabase) fdb;
         // Create default exercises
         // Abs
-        Exercise exercise1 = addExercise(DBINSTANCE, "Sit Ups", "Abs", 10, 0);
-        Exercise exercise2 = addExercise(DBINSTANCE,"Reverse Crunches", "Abs", 10, 1);
-        Exercise exercise3 = addExercise(DBINSTANCE,"Bicycle Crunches", "Abs", 10, 2);
+        Exercise exercise1 = addExercise(DBINSTANCE, "Sit Ups", "Abs", 10, R.drawable.sit_ups);
+        Exercise exercise2 = addExercise(DBINSTANCE,"Reverse Crunches", "Abs", 10, R.drawable.reverse_crunches);
+        Exercise exercise3 = addExercise(DBINSTANCE,"Bicycle Crunches", "Abs", 10, R.drawable.bicycle_crunches);
 
         // Quads
-        Exercise exercise4 = addExercise(DBINSTANCE,"Lunges", "Quads", 10, 3);
-        Exercise exercise5 = addExercise(DBINSTANCE,"High Knees", "Quads", 20, 4);
-        Exercise exercise6 = addExercise(DBINSTANCE,"Turning Kicks", "Quads", 10, 5);
+        Exercise exercise4 = addExercise(DBINSTANCE,"Lunges", "Quads", 10, R.drawable.lunges);
+        Exercise exercise5 = addExercise(DBINSTANCE,"High Knees", "Quads", 20, R.drawable.high_knees);
+        Exercise exercise6 = addExercise(DBINSTANCE,"Turning Kicks", "Quads", 10, R.drawable.turning_kicks);
 
         // Glutes
-        Exercise exercise7 = addExercise(DBINSTANCE,"Squats", "Glutes", 20, 6);
-        Exercise exercise8 = addExercise(DBINSTANCE,"Donkey Kicks", "Glutes", 20, 7);
-        Exercise exercise9 = addExercise(DBINSTANCE,"Bridges", "Glutes", 10, 8);
+        Exercise exercise7 = addExercise(DBINSTANCE,"Squats", "Glutes", 20, R.drawable.squats);
+        Exercise exercise8 = addExercise(DBINSTANCE,"Donkey Kicks", "Glutes", 20, R.drawable.donkey_kicks);
+        Exercise exercise9 = addExercise(DBINSTANCE,"Bridges", "Glutes", 10, R.drawable.bridges);
 
         // Triceps
-        Exercise exercise10 = addExercise(DBINSTANCE,"Close Grip Press-Ups", "Triceps", 10, 9);
-        Exercise exercise11 = addExercise(DBINSTANCE,"Tricep Dips", "Triceps", 10, 10);
-        Exercise exercise12 = addExercise(DBINSTANCE,"Tricep Extensions", "Triceps", 10, 11);
+        Exercise exercise10 = addExercise(DBINSTANCE,"Close Grip Press-Ups", "Triceps", 10, R.drawable.close_grip_press_ups);
+        Exercise exercise11 = addExercise(DBINSTANCE,"Tricep Dips", "Triceps", 10, R.drawable.tricep_dips);
+        Exercise exercise12 = addExercise(DBINSTANCE,"Tricep Extensions", "Triceps", 10, R.drawable.tricep_extensions);
 
         // Biceps
-        Exercise exercise13 = addExercise(DBINSTANCE,"Leg Curls", "Biceps", 10, 12);
-        Exercise exercise14 = addExercise(DBINSTANCE,"Chin-Ups", "Biceps", 10, 13);
-        Exercise exercise15 = addExercise(DBINSTANCE,"Doorframe Rows", "Biceps", 10, 14);
+        Exercise exercise13 = addExercise(DBINSTANCE,"Leg Curls", "Biceps", 10, R.drawable.leg_curls);
+        Exercise exercise14 = addExercise(DBINSTANCE,"Chin-Ups", "Biceps", 10, R.drawable.chin_ups);
+        Exercise exercise15 = addExercise(DBINSTANCE,"Doorframe Rows", "Biceps", 10, R.drawable.doorframe_rows);
 
         // Back
-        Exercise exercise16 = addExercise(DBINSTANCE,"Pull-Ups", "Back", 10, 15);
-        Exercise exercise17 = addExercise(DBINSTANCE,"Elbow Lifts", "Back", 10, 16);
-        Exercise exercise18 = addExercise(DBINSTANCE,"Superman", "Back", 10, 17);
+        Exercise exercise16 = addExercise(DBINSTANCE,"Pull-Ups", "Back", 10, R.drawable.pull_ups);
+        Exercise exercise17 = addExercise(DBINSTANCE,"Elbow Lifts", "Back", 10, R.drawable.elbow_lifts);
+        Exercise exercise18 = addExercise(DBINSTANCE,"Superman", "Back", 10, R.drawable.superman);
 
         // Chest
-        Exercise exercise19 = addExercise(DBINSTANCE,"Press-Ups", "Chest", 10, 18);
-        Exercise exercise20 = addExercise(DBINSTANCE,"Plank Rotations", "Chest", 10, 19);
-        Exercise exercise21 = addExercise(DBINSTANCE,"Chest Squeezes", "Chest", 10, 20);
+        Exercise exercise19 = addExercise(DBINSTANCE,"Press-Ups", "Chest", 10, R.drawable.press_ups);
+        Exercise exercise20 = addExercise(DBINSTANCE,"Plank Rotations", "Chest", 10, R.drawable.plank_rotations);
+        Exercise exercise21 = addExercise(DBINSTANCE,"Chest Squeezes", "Chest", 10, R.drawable.chest_squeezes);
 
         // Create default workouts
         addWorkout(DBINSTANCE, "Abs", 1, 25, groupExercises(exercise1, exercise2, exercise3), false);
@@ -99,6 +100,8 @@ public abstract class FitnessDatabase extends RoomDatabase {
         addWorkout(DBINSTANCE, "Biceps", 1, 20, groupExercises(exercise13, exercise14, exercise15), false);
         addWorkout(DBINSTANCE, "Back", 1, 25, groupExercises(exercise16, exercise17, exercise18), false);
         addWorkout(DBINSTANCE, "Chest", 1, 20, groupExercises(exercise19, exercise20, exercise21), false);
+
+        Log.d("FGM_DEBUG","Database filled with default data");
     }
 
     private static List<Exercise> groupExercises(Exercise exercise1,Exercise exercise2,Exercise exercise3) {

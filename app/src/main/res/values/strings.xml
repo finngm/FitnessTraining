@@ -10,10 +10,14 @@
     <string name="btn_makeWorkout">Finish</string>
 
     <string name="img_running_man">Man Jogging</string>
+    <string name="img_exercise">Exercise</string>
 
     <string name="text_workouttitle">Select A Workout</string>
     <string name="text_myworkouts">My Workouts</string>
     <string name="text_createworkout">Create your own Workout</string>
     <string name="text_nameworkout">Workout Name:</string>
     <string name="text_restTime">Rest Time:</string>
+
+    <string name="desc_workoutName">name</string>
+    <string name="desc_restTime">time (Seconds)</string>
 </resources>
