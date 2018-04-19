@@ -14,18 +14,15 @@ import fgmfitnessapp.fitnesstraining.model.Workout;
 
 public class WorkoutsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private FitnessDatabase fDatabase;
+    private FitnessDatabase fDatabase = FitnessDatabase.getFileDatabase(getApplicationContext());;
+    final GetWorkoutsTask wTask = new GetWorkoutsTask();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workouts);
-
-        // get database instance
-        fDatabase = FitnessDatabase.getFileDatabase(getApplicationContext());
 
         mRecyclerView = findViewById(R.id.recview_workouts);
         mRecyclerView.setHasFixedSize(true);
@@ -36,16 +33,26 @@ public class WorkoutsActivity extends AppCompatActivity {
 
         // specify the adapter
         // load workout data on background thread
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter = new SelectWorkoutAdapter(fetchData());
-            }
-        });
-        mRecyclerView.setAdapter(mAdapter);
+        wTask.execute(null, null, null);
     }
 
-    private List<Workout> fetchData() {
-        return fDatabase.workoutModel().getAllWorkouts();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // specify the adapter
+        // load workout data on background thread
+        wTask.execute(null, null, null);
+    }
+
+    class GetWorkoutsTask extends AsyncTask<Void, Void, List<Workout>> {
+        @Override
+        protected List<Workout> doInBackground(Void... voids) {
+            return fDatabase.workoutModel().getAllWorkouts();
+        }
+
+        @Override
+        protected void onPostExecute(List<Workout> workouts) {
+            mRecyclerView.setAdapter(new SelectWorkoutAdapter(workouts));
+        }
     }
 }

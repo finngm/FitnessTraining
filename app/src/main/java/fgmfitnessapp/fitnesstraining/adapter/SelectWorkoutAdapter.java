@@ -18,9 +18,11 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
     public static class SelectWorkoutViewHolder extends RecyclerView.ViewHolder {
         // each data item is a string
         public TextView mTextView;
+        public TextView mTextDesc;
         public SelectWorkoutViewHolder(View iView) {
             super(iView);
             mTextView = iView.findViewById(R.id.text_itemTitle);
+            mTextDesc = iView.findViewById(R.id.text_itemDesc);
         }
     }
 
@@ -43,14 +45,20 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(SelectWorkoutViewHolder holder, int position) {
-
         holder.mTextView.setText(mDataset.get(position).getWorkoutName());
-
+        holder.mTextDesc.setText(isCustomWorkout(mDataset.get(position).isUserCreated()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    private String isCustomWorkout(boolean isUserCreated) {
+        if (isUserCreated) {
+            return "Custom Workout";
+        }
+        return "Default Workout";
     }
 }

@@ -5,9 +5,15 @@
     <string name="btn_workouts">Workouts</string>
     <string name="btn_stats">My Stats</string>
     <string name="btn_log">My Log</string>
+    <string name="btn_createworkout">Create Workout</string>
+    <string name="btn_addExercise">Add to Workout</string>
+    <string name="btn_makeWorkout">Finish</string>
 
     <string name="img_running_man">Man Jogging</string>
 
     <string name="text_workouttitle">Select A Workout</string>
     <string name="text_myworkouts">My Workouts</string>
+    <string name="text_createworkout">Create your own Workout</string>
+    <string name="text_nameworkout">Workout Name:</string>
+    <string name="text_restTime">Rest Time:</string>
 </resources>
