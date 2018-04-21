@@ -17,6 +17,7 @@
     <string name="text_createworkout">Create your own Workout</string>
     <string name="text_nameworkout">Workout Name:</string>
     <string name="text_restTime">Rest Time:</string>
+    <string name="text_selectedExercises">Selected Exercises: (tap to remove)</string>
 
     <string name="desc_workoutName">name</string>
     <string name="desc_restTime">time (Seconds)</string>

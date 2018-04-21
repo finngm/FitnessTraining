@@ -20,7 +20,7 @@ public class WorkoutsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private FitnessDatabase fDatabase;
-    final GetWorkoutsTask wTask = new GetWorkoutsTask();
+    GetWorkoutsTask wTask = new GetWorkoutsTask();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

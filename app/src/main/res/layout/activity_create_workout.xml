@@ -4,53 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     android:background="@color/colorBackground"
     tools:context=".CreateWorkoutActivity">
 
-    <Button
-        android:id="@+id/btn_addExercise"
-        android:layout_width="163dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bg_button"
-        android:text="@string/btn_addExercise"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recview_exercises" />
-
     <TextView
         android:id="@+id/text_restTime"
-        android:layout_width="193dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="95dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginTop="8dp"
         android:text="@string/text_restTime"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_workoutName" />
+        app:layout_constraintTop_toBottomOf="@+id/text_createWorkoutTitle" />
 
     <TextView
         android:id="@+id/text_workoutName"
-        android:layout_width="193dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="144dp"
+        android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/text_nameworkout"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.139"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_createWorkoutTitle" />
 
@@ -75,36 +57,30 @@
 
     <EditText
         android:id="@+id/editText_workoutName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_width="128dp"
+        android:layout_height="54dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="@string/desc_workoutName"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_workoutName" />
 
     <EditText
         android:id="@+id/editText_restTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="11dp"
+        android:layout_width="128dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="28dp"
         android:ems="10"
         android:hint="@string/desc_restTime"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.145"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_restTime" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recview_exercises"
         android:layout_width="344dp"
-        android:layout_height="211dp"
+        android:layout_height="201dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -116,15 +92,47 @@
 
     <Button
         android:id="@+id/btn_finishCreateWorkout"
-        android:layout_width="163dp"
+        android:layout_width="249dp"
         android:layout_height="52dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_button"
+        android:enabled="false"
         android:text="@string/btn_makeWorkout"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:onClick="finishCreateWorkout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recview_selectedExercises" />
+
+    <TextView
+        android:id="@+id/text_selectedExercises"
+        android:layout_width="345dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/text_selectedExercises"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recview_exercises" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recview_selectedExercises"
+        android:layout_width="344dp"
+        android:layout_height="73dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scrollbars="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_selectedExercises" />
+
 </android.support.constraint.ConstraintLayout>
