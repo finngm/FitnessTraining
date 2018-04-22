@@ -20,14 +20,17 @@ import fgmfitnessapp.fitnesstraining.database.FitnessDatabase;
 import fgmfitnessapp.fitnesstraining.model.Exercise;
 
 public class CreateWorkoutActivity extends AppCompatActivity {
+    private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView mRecViewSelectExercise;
     private RecyclerView mRecViewSelectedExercises;
-    private RecyclerView.LayoutManager mLayoutManager;
     private SelectExerciseAdapter mExerciseAdapter;
     private SelectedExercisesAdapter mSelectedExercisesAdapter;
+
     private Button btn_finishCreateWorkout;
     private EditText editText_workoutName;
+    private String newWorkoutName;
     private EditText editText_restTime;
+    private String newRestTime;
 
     private FitnessDatabase fDatabase;
     final GetExercisesTask eTask = new GetExercisesTask();
@@ -45,7 +48,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         editText_restTime = findViewById(R.id.editText_restTime);
 
         // link recycle view to variable
-        mRecViewSelectExercise = findViewById(R.id.recview_exercises);
+        mRecViewSelectExercise = findViewById(R.id.recview_workoutExercises);
         mRecViewSelectExercise.setHasFixedSize(true);
         // use a linear layout
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -85,28 +88,39 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         mSelectedExercisesAdapter.notifyItemRemoved(position);
     }
 
+    // called when 'Finish' button is pressed
     public void finishCreateWorkout(View view) {
-        new GetWorkoutNameTask().execute(editText_workoutName.getText().toString());
+        if (isWorkoutCorrect()) {
+            new CheckWorkoutNameTask().execute(editText_workoutName.getText().toString());
+        }
     }
 
-    // have the fields been filled out correctly and is the name unique
-    private boolean isWorkoutCorrect(String workoutName) {
-        if (TextUtils.isEmpty(editText_workoutName.getText().toString())) {
+    // have the fields been filled out correctly
+    private boolean isWorkoutCorrect() {
+        newWorkoutName = editText_workoutName.getText().toString();
+        newRestTime = editText_restTime.getText().toString();
+        if (TextUtils.isEmpty(newWorkoutName)) {
             Toast.makeText(getApplicationContext(), "Enter a Workout Name",
                     Toast.LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(editText_restTime.getText().toString()) ||
-                 Integer.parseInt(editText_restTime.getText().toString()) < 1) {
+        else if (TextUtils.isEmpty(newRestTime) ||
+                 Integer.parseInt(newRestTime) < 1) {
             Toast.makeText(getApplicationContext(), "Enter a Rest Time",
                     Toast.LENGTH_SHORT).show();
         }
-        else if (!editText_workoutName.getText().toString().equals(workoutName)) {
+        else {
             return true;
         }
-        else {
-            Toast.makeText(getApplicationContext(), "A Workout with this name already exists",
-                    Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    // is the workout name unique
+    private boolean isWorkoutUnique(String workoutName) {
+        if (!newWorkoutName.equals(workoutName)) {
+            return true;
         }
+        Toast.makeText(getApplicationContext(), "A Workout with this name already exists",
+                Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -119,6 +133,22 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         }
     }
 
+    // reset all fields on screen
+    private void resetFields() {
+        editText_workoutName.setText("");
+        editText_restTime.setText("");
+        selectedExercises.clear();
+        enableFinish();
+        mSelectedExercisesAdapter.notifyDataSetChanged();
+    }
+
+    /*****************************************************
+     * Tasks that get/insert data from/into the database *
+     *****************************************************/
+
+    /**********************
+     * Gets all exercises *
+     **********************/
     class GetExercisesTask extends AsyncTask<Void, Void, List<Exercise>> {
         @Override
         protected List<Exercise> doInBackground(Void... voids) {
@@ -140,18 +170,39 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         }
     }
 
-    class GetWorkoutNameTask extends AsyncTask<String, Void, String> {
+    /********************************************************
+     * Checks if workout is unique (by comparing the names) *
+     * inserts new workout if true                          *
+     ********************************************************/
+    class CheckWorkoutNameTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... workoutName) {
-            return fDatabase.workoutModel().getWorkoutWithName(workoutName[0]);
+            return fDatabase.workoutModel().getWorkoutNameWithName(workoutName[0]);
         }
 
         @Override
         protected void onPostExecute(String workoutName) {
-            if (isWorkoutCorrect(workoutName)) {
-                Toast.makeText(getApplicationContext(), "INSERT NEW WORKOUT",
-                        Toast.LENGTH_SHORT).show();
+            if (isWorkoutUnique(workoutName)) {
+                new InsertNewWorkoutTask().execute(null, null, null);
             }
+        }
+    }
+
+    /*************************************
+     * Inserts new workout into database *
+     *************************************/
+    class InsertNewWorkoutTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            fDatabase.addWorkout(fDatabase, newWorkoutName, 0, Integer.parseInt(newRestTime), selectedExercises, true);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            resetFields();
+            Toast.makeText(getApplicationContext(), "Workout '" + newWorkoutName + "' has been saved",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         btn_workoutActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startIntent = new Intent(getApplicationContext(), WorkoutsActivity.class);
+                Intent startIntent = new Intent(getApplicationContext(), SelectWorkoutActivity.class);
                 startActivity(startIntent);
             }
         });

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
     android:background="@color/colorBackground"
+    android:focusableInTouchMode="true"
     tools:context=".CreateWorkoutActivity">
 
     <TextView
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_restTime" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recview_exercises"
+        android:id="@+id/recview_workoutExercises"
         android:layout_width="344dp"
         android:layout_height="201dp"
         android:layout_marginEnd="8dp"
@@ -99,12 +99,12 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_button"
         android:enabled="false"
+        android:onClick="finishCreateWorkout"
         android:text="@string/btn_makeWorkout"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:onClick="finishCreateWorkout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,15 +121,16 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recview_exercises" />
+        app:layout_constraintTop_toBottomOf="@+id/recview_workoutExercises" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recview_selectedExercises"
-        android:layout_width="344dp"
+        android:layout_width="361dp"
         android:layout_height="73dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#6c5ce7"
         android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

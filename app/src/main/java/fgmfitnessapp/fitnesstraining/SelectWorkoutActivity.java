@@ -15,12 +15,15 @@ import fgmfitnessapp.fitnesstraining.adapter.SelectWorkoutAdapter;
 import fgmfitnessapp.fitnesstraining.database.FitnessDatabase;
 import fgmfitnessapp.fitnesstraining.model.Workout;
 
-public class WorkoutsActivity extends AppCompatActivity {
+public class SelectWorkoutActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    private SelectWorkoutAdapter mSelectWorkoutAdapter;
 
     private FitnessDatabase fDatabase;
     GetWorkoutsTask wTask = new GetWorkoutsTask();
+
+    private List<Workout> allWorkouts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,19 @@ public class WorkoutsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // load workout data on background thread
-        wTask.execute(null, null, null);
+            wTask.execute();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        new GetWorkoutsTask().execute();
+    }
+
+    public void loadWorkout(int position) {
+        Intent startIntent = new Intent(getApplicationContext(), DisplayWorkoutActivity.class);
+        startIntent.putExtra("workoutName", allWorkouts.get(position).getWorkoutName());
+        startActivity(startIntent);
     }
 
     class GetWorkoutsTask extends AsyncTask<Void, Void, List<Workout>> {
@@ -56,7 +71,16 @@ public class WorkoutsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<Workout> workouts) {
-            mRecyclerView.setAdapter(new SelectWorkoutAdapter(workouts));
+            allWorkouts = workouts;
+            mSelectWorkoutAdapter = new SelectWorkoutAdapter(allWorkouts);
+            mRecyclerView.setAdapter(mSelectWorkoutAdapter);
+
+            mSelectWorkoutAdapter.setOnItemClickListener(new SelectWorkoutAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    loadWorkout(position);
+                }
+            });
         }
     }
 }

@@ -122,7 +122,7 @@ public abstract class FitnessDatabase extends RoomDatabase {
         return exercise;
     }
 
-    private static void addWorkout(final FitnessDatabase db,
+    public static void addWorkout(final FitnessDatabase db,
                                    final String name,
                                    final int level,
                                    final int restTime,
@@ -130,7 +130,7 @@ public abstract class FitnessDatabase extends RoomDatabase {
                                    final boolean userCreated) {
         db.workoutModel().insertAll(new Workout(name, level, restTime, userCreated));
         for (Exercise exercise : exercises) {
-            db.workoutExerciseJoinModel().insert(new WorkoutExerciseJoin(name, exercise.getExerciseName()));
+            db.workoutExerciseJoinModel().insert(new WorkoutExerciseJoin(0, name, exercise.getExerciseName()));
         }
     }
 

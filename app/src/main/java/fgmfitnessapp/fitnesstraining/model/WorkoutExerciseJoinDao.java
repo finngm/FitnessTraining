@@ -19,5 +19,5 @@ public interface WorkoutExerciseJoinDao {
     @Query("SELECT * FROM exercise INNER JOIN workout_exercise_join ON " +
             "exercise.exercise_Name = workout_exercise_join.exerciseName WHERE " +
             "workout_exercise_join.workoutName=:workoutName")
-            List<Exercise> getRepositoriesForUsers(final String workoutName);
+            List<Exercise> getExercisesForWorkouts(final String workoutName);
 }

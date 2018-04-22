@@ -55,8 +55,7 @@ public class SelectExerciseAdapter extends RecyclerView.Adapter<SelectExerciseAd
 
     // Create new views (invoked by the layout manager)
     @Override
-    public SelectExerciseViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
+    public SelectExerciseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.exercises_layout, parent, false);

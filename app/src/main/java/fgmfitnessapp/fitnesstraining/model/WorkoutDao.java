@@ -11,11 +11,11 @@ public interface WorkoutDao {
     @Query("SELECT * FROM workout")
     List<Workout> getAllWorkouts();
 
-    @Query("SELECT * FROM workout WHERE user_created")
-    List<Workout> getUserCreatedWorkouts();
-
     @Query("SELECT workout_name FROM workout WHERE workout_name=:name")
-    String getWorkoutWithName(String name);
+    String getWorkoutNameWithName(String name);
+
+    @Query("SELECT * FROM workout WHERE workout_name=:name")
+    Workout getWorkoutWithName(String name);
 
     @Insert
     void insertAll(Workout... workouts);

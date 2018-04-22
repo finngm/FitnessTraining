@@ -13,16 +13,37 @@ import fgmfitnessapp.fitnesstraining.model.Workout;
 
 public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdapter.SelectWorkoutViewHolder> {
     private List<Workout> mDataset;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener  listener) {
+        mListener = listener;
+    }
 
     // Reference to the views for each data item
     public static class SelectWorkoutViewHolder extends RecyclerView.ViewHolder {
         // each data item is a string
         public TextView mTextView;
         public TextView mTextDesc;
-        public SelectWorkoutViewHolder(View iView) {
+        public SelectWorkoutViewHolder(View iView, final OnItemClickListener listener) {
             super(iView);
             mTextView = iView.findViewById(R.id.text_itemTitle);
             mTextDesc = iView.findViewById(R.id.text_itemDesc);
+
+            iView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -33,12 +54,11 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
 
     // Create new views (invoked by the layout manager)
     @Override
-    public SelectWorkoutViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                           int viewType) {
+    public SelectWorkoutViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                                .inflate(R.layout.list_layout, parent, false);
-        SelectWorkoutViewHolder vh = new SelectWorkoutViewHolder(v);
+        SelectWorkoutViewHolder vh = new SelectWorkoutViewHolder(v, mListener);
         return vh;
     }
 
@@ -55,6 +75,7 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
         return mDataset.size();
     }
 
+    // checks if workout was created by user, returns appropriate string
     private String isCustomWorkout(boolean isUserCreated) {
         if (isUserCreated) {
             return "Custom Workout";
