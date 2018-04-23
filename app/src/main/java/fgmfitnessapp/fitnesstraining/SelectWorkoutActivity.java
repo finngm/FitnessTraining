@@ -48,7 +48,7 @@ public class SelectWorkoutActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // load workout data on background thread
-            wTask.execute();
+        wTask.execute();
     }
 
     @Override

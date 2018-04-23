@@ -22,7 +22,9 @@
         <activity android:name=".SelectWorkoutActivity" />
         <activity android:name=".CreateWorkoutActivity" />
         <activity android:name=".DisplayWorkoutActivity" />
-        <activity android:name=".RunWorkoutActivity"></activity>
+        <activity android:name=".RunWorkoutActivity" />
+        <activity android:name=".LogActivity" />
+        <activity android:name=".StatsActivity"></activity>
     </application>
 
 </manifest>

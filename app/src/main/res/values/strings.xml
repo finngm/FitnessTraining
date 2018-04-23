@@ -28,6 +28,12 @@
 
     <string name="text_startworkout">Start this Workout?</string>
 
+    <string name="text_workoutlog">Workout Log</string>
+
+    <string name="text_mystats">My Stats</string>
+    <string name="text_workoutText">Workouts</string>
+    <string name="text_exerciseText">Exercises</string>
+
     <string name="desc_workoutName">name</string>
     <string name="desc_restTime">time (Seconds)</string>
 </resources>

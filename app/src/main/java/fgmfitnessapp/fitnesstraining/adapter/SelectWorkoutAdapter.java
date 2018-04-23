@@ -30,7 +30,7 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
         public TextView mTextDesc;
         public SelectWorkoutViewHolder(View iView, final OnItemClickListener listener) {
             super(iView);
-            mTextView = iView.findViewById(R.id.text_itemTitle);
+            mTextView = iView.findViewById(R.id.text_workoutName);
             mTextDesc = iView.findViewById(R.id.text_itemDesc);
 
             iView.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +65,9 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(SelectWorkoutViewHolder holder, int position) {
-        holder.mTextView.setText(mDataset.get(position).getWorkoutName());
-        holder.mTextDesc.setText(isCustomWorkout(mDataset.get(position).isUserCreated()));
+        holder.mTextView.setText(mDataset.get(position).getDisplayName());
+        holder.mTextDesc.setText(isCustomWorkout(mDataset.get(position).isUserCreated(),
+                                                 position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -76,10 +77,10 @@ public class SelectWorkoutAdapter extends RecyclerView.Adapter<SelectWorkoutAdap
     }
 
     // checks if workout was created by user, returns appropriate string
-    private String isCustomWorkout(boolean isUserCreated) {
+    private String isCustomWorkout(boolean isUserCreated, int position) {
         if (isUserCreated) {
             return "Custom Workout";
         }
-        return "Default Workout";
+        return "Intensity Level: " + mDataset.get(position).getLevel();
     }
 }

@@ -116,7 +116,8 @@ public class CreateWorkoutActivity extends AppCompatActivity {
 
     // is the workout name unique
     private boolean isWorkoutUnique(String workoutName) {
-        if (!newWorkoutName.equals(workoutName)) {
+        if (workoutName == null ||
+                !newWorkoutName.toUpperCase().equals(workoutName.toUpperCase())) {
             return true;
         }
         Toast.makeText(getApplicationContext(), "A Workout with this name already exists",
@@ -177,7 +178,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     class CheckWorkoutNameTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... workoutName) {
-            return fDatabase.workoutModel().getWorkoutNameWithName(workoutName[0]);
+            return fDatabase.workoutModel().getWorkoutNameWithName(workoutName[0].toUpperCase());
         }
 
         @Override
@@ -194,7 +195,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
     class InsertNewWorkoutTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            fDatabase.addWorkout(fDatabase, newWorkoutName, 0, Integer.parseInt(newRestTime), selectedExercises, true);
+            fDatabase.addWorkout(fDatabase, newWorkoutName, newWorkoutName, 0, Integer.parseInt(newRestTime), selectedExercises, true, 0);
             return null;
         }
 

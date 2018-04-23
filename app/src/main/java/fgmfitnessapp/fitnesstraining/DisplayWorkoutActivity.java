@@ -1,13 +1,17 @@
 package fgmfitnessapp.fitnesstraining;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fgmfitnessapp.fitnesstraining.adapter.SelectExerciseAdapter;
@@ -55,6 +59,26 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
         }
     }
 
+    /*************************************************************************************
+     * this method is called when the begin button is clicked.
+     * adds the workout and linked exercises to an extra to be passed onto next activity *
+     *************************************************************************************/
+    public void beginWorkout(View view) {
+        Intent startIntent = new Intent(getApplicationContext(), RunWorkoutActivity.class);
+        Bundle extras = new Bundle();
+        extras.putParcelable("workout", (Parcelable) workout);
+
+        /* exercises must be passed as arrayList
+        so quick transfer of data from List -> ArrayList */
+        ArrayList<Exercise> arrayWorkoutExercises = new ArrayList<>();
+        arrayWorkoutExercises.addAll(workoutExercises);
+        extras.putParcelableArrayList("exercises", arrayWorkoutExercises);
+
+        startIntent.putExtras(extras);
+        startActivity(startIntent);
+        finish();
+    }
+
     class GetFullWorkoutTask extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... workoutName) {
@@ -67,7 +91,7 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void voids) {
             // set textviews
-            text_workoutName.setText(workout.getWorkoutName());
+            text_workoutName.setText(workout.getDisplayName());
             text_workoutRest.setText("Rest Time: " + workout.getRestTime());
             if (workout.getLevel() == 0) {
                 text_intensityLevel.setText("Custom Workout");

@@ -31,7 +31,7 @@ public class SelectExerciseAdapter extends RecyclerView.Adapter<SelectExerciseAd
         public ImageView mImageView;
         public SelectExerciseViewHolder(View iView, final OnItemClickListener listener) {
             super(iView);
-            mTextView = iView.findViewById(R.id.text_itemTitle);
+            mTextView = iView.findViewById(R.id.text_workoutName);
             mImageView = iView.findViewById(R.id.image_itemImage);
 
             iView.setOnClickListener(new View.OnClickListener() {

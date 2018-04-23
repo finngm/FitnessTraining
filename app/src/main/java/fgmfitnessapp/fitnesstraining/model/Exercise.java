@@ -4,12 +4,14 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.util.Objects;
 
 @Entity(indices = {@Index(value = {"exercise_name"})})
-public class Exercise {
+public class Exercise implements Parcelable{
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "exercise_name")
@@ -24,11 +26,27 @@ public class Exercise {
     @ColumnInfo(name = "image_id")
     private int image_id;
 
-    public Exercise(@NonNull String exerciseName, String bodyPart, int repetitions, int image_id) {
+    @ColumnInfo(name = "times_completed")
+    private int timesCompleted;
+
+    public Exercise(@NonNull String exerciseName,
+                    String bodyPart,
+                    int repetitions,
+                    int image_id,
+                    int timesCompleted) {
         this.exerciseName = exerciseName;
         this.bodyPart = bodyPart;
         this.repetitions = repetitions;
         this.image_id = image_id;
+        this.timesCompleted = timesCompleted;
+    }
+
+    public Exercise(Parcel in) {
+        exerciseName = in.readString();
+        bodyPart    = in.readString();
+        repetitions = in.readInt();
+        image_id = in.readInt();
+        timesCompleted = in.readInt();
     }
 
     @NonNull
@@ -63,6 +81,46 @@ public class Exercise {
     public void setImage_id(int image_id) {
         this.image_id = image_id;
     }
+
+    public int getTimesCompleted() {
+        return timesCompleted;
+    }
+
+    public void setTimesCompleted(int timesCompleted) {
+        this.timesCompleted = timesCompleted;
+    }
+
+    /**********************
+     * Parcelable methods *
+     **********************/
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int i) {
+        out.writeString(exerciseName);
+        out.writeString(bodyPart);
+        out.writeInt(repetitions);
+        out.writeInt(image_id);
+        out.writeInt(timesCompleted);
+    }
+
+    //for arrays and creating from a parcel
+    public static final Parcelable.Creator<Exercise> CREATOR = new Parcelable.Creator<Exercise>() {
+        public Exercise createFromParcel(Parcel in) {
+            return new Exercise(in);
+        }
+        public Exercise[] newArray(int size) {
+            return new Exercise[size];
+        }
+    };
+
+    /************************
+     * equals/hash/toString *
+     ************************/
 
     @Override
     public boolean equals(Object o) {
