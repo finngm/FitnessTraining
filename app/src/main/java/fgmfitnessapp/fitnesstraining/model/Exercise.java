@@ -123,17 +123,6 @@ public class Exercise implements Parcelable{
      ************************/
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Exercise exercise = (Exercise) o;
-        return repetitions == exercise.repetitions &&
-                image_id == exercise.image_id &&
-                Objects.equals(exerciseName, exercise.exerciseName) &&
-                Objects.equals(bodyPart, exercise.bodyPart);
-    }
-
-    @Override
     public int hashCode() {
 
         return Objects.hash(exerciseName, bodyPart, repetitions, image_id);
@@ -149,4 +138,15 @@ public class Exercise implements Parcelable{
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exercise exercise = (Exercise) o;
+        return repetitions == exercise.repetitions &&
+                image_id == exercise.image_id &&
+                timesCompleted == exercise.timesCompleted &&
+                Objects.equals(exerciseName, exercise.exerciseName) &&
+                Objects.equals(bodyPart, exercise.bodyPart);
+    }
 }

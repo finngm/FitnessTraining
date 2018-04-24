@@ -5,6 +5,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Objects;
+
 @Entity
 public class WorkoutLog {
     @PrimaryKey(autoGenerate = true)
@@ -59,5 +61,22 @@ public class WorkoutLog {
 
     public void setTimeCompleted(String timeCompleted) {
         this.timeCompleted = timeCompleted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WorkoutLog that = (WorkoutLog) o;
+        return id == that.id &&
+                Objects.equals(workoutName, that.workoutName) &&
+                Objects.equals(dateCompleted, that.dateCompleted) &&
+                Objects.equals(timeCompleted, that.timeCompleted);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, workoutName, dateCompleted, timeCompleted);
     }
 }

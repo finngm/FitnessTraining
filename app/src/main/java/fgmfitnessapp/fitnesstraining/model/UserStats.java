@@ -6,6 +6,8 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Objects;
+
 @Entity(indices = {@Index(value = {"id"})})
 public class UserStats {
     @PrimaryKey
@@ -48,5 +50,21 @@ public class UserStats {
 
     public void setExercisesCompleted(int exercisesCompleted) {
         this.exercisesCompleted = exercisesCompleted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserStats userStats = (UserStats) o;
+        return workoutsCompleted == userStats.workoutsCompleted &&
+                exercisesCompleted == userStats.exercisesCompleted &&
+                Objects.equals(id, userStats.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, workoutsCompleted, exercisesCompleted);
     }
 }
